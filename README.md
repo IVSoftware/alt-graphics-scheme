@@ -43,14 +43,10 @@ When I tested this approach it seemed pretty zippy, but you may have to actually
         private async Task onMyBoolChanged()
         {
             if(myBool)
-            {
+            {               
                 for (int i = 1; i < _backgrounds.Length; i++)
                 {
-                    var captureImage = _backgrounds[i];
-                    BeginInvoke((MethodInvoker)delegate 
-                    {
-                        BackgroundImage = captureImage;
-                    });
+                    BackgroundImage = _backgrounds[i];
                     await Task.Delay(100);
                 }
             }

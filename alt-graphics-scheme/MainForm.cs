@@ -50,11 +50,7 @@ namespace alt_graphics_scheme
             {
                 for (int i = 1; i < _backgrounds.Length; i++)
                 {
-                    var captureImage = _backgrounds[i];
-                    BeginInvoke((MethodInvoker)delegate 
-                    {
-                        BackgroundImage = captureImage;
-                    });
+                    BackgroundImage = _backgrounds[i];
                     await Task.Delay(100);
                 }
             }
