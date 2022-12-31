@@ -16,6 +16,7 @@ namespace alt_graphics_scheme
         public MainForm()
         {
             InitializeComponent();
+            DoubleBuffered = true; // Smoother if true but compare performance with/without.
             var dir = 
                 Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,

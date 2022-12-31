@@ -1,14 +1,17 @@
-Your question is whether there's another way to use `Graphics.DrawImage` in order to draw the entire screen quickly enough to serve as an animation. One "other way" would be to invoke it _indirectly_ by detecting changes to the `myBool` property and modifying the `BackgroundImage` property of the main form in response to that. If `myBool` is true, the animation consists of iterating an array of images using `BeginInvoke` so that at least the UI thread will only be blocked during individual frame draws not the entire animation.
+Your question is whether there's another way to use `Graphics.DrawImage` in order to draw the entire screen quickly enough to serve as an animation. 
 
-This would avoid any potential circularity that might be occurring in the `Paint` event handler as it is coded now.
+One "other way" would be to invoke it _indirectly_ by detecting changes to the `myBool` property and modifying the `BackgroundImage` property of the main form in response to that. If `myBool` is true, the animation consists of iterating an array of images using `BeginInvoke` so that at least the UI thread will only be blocked during individual frame draws not the entire animation. This would also avoid any potential circularity that might be occurring in the `Paint` event handler as it is coded now.
 
-When I tested this approach it seemed pretty zippy, but you may have to actually [clone]() my sample to see whether it's fast enough for your application.
+When I tested this approach it seemed pretty zippy, but you may have to actually [clone](https://github.com/IVSoftware/alt-graphics-scheme.git) my sample to see whether it's fast enough for your application.
+
+[![animation][1]][1]
 
     public partial class MainForm : Form
     {
         public MainForm()
         {
             InitializeComponent();
+            DoubleBuffered = true; // Smoother if true but compare performance with/without.
             var dir = 
                 Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
@@ -57,3 +60,6 @@ When I tested this approach it seemed pretty zippy, but you may have to actually
             }
         }
     }
+
+
+  [1]: https://i.stack.imgur.com/WrWp7.png
